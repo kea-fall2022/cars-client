@@ -1,4 +1,4 @@
-import { API_URL,FETCH_NO_API_ERROR } from "../../settings.js"
+import { API_URL.FETCH_NO_API_ERROR } from "../../settings.js"
 import { sanitizeStringWithTableRows, handleHttpErrors } from "../../utils.js"
 
 const URL = API_URL + "/members"

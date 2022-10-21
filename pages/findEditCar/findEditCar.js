@@ -47,7 +47,7 @@ async function deleteCar() {
     }
     const options = {}
     options.method = "DELETE"
-    await fetch(URL + "/" + idForCarToDelete, options)
+    await fetch(API_URL + "/" + idForCarToDelete, options)
     setStatusMsg("Car succesfully deleted", false)
     clearInputFields()
   }
@@ -112,12 +112,11 @@ function renderCar(car) {
   carInputDiscount.value = car.bestDiscount
 }
 
-
 async function submitEditedCar(evt) {
   evt.preventDefault()
   try {
     const car = {}
-    car.id = carIdInput.value
+    car.id = carIdInput
     car.brand = carInputBrand.value
     car.model = carInputModel.value
     car.pricePrDay = carInputPricePrDay.value

@@ -59,14 +59,14 @@ async function saveMember(evt) {
   setStatusMsg("")
   //Create the DTO object that must be sent with the body in the POST Request
   const memberRequest = {}
-  memberRequest.username = inputUsername.value
-  memberRequest.email = inputEmail.value
-  memberRequest.password = inputPassword.value
-  memberRequest.firstName = inputFirstName.value
-  memberRequest.lastName = inputLastName.value
-  memberRequest.street = inputStreet.value
-  memberRequest.city = inputCity.value
-  memberRequest.zip = inputZip.value
+  memberRequest.username = inputUsername
+  memberRequest.email = inputEmail
+  memberRequest.password = inputPassword
+  memberRequest.firstName = inputFirstName
+  memberRequest.lastName = inputLastName
+  memberRequest.street = inputStreet
+  memberRequest.city = inputCity
+  memberRequest.zip = inputZip
 
   const postOptions = {}
   postOptions.method = "POST"
