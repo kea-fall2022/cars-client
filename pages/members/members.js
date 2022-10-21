@@ -1,4 +1,4 @@
-import { API_URL } from "../../settings.js"
+import { API_URL,FETCH_NO_API_ERROR } from "../../settings.js"
 import { sanitizeStringWithTableRows, handleHttpErrors } from "../../utils.js"
 
 const URL = API_URL + "/members"
@@ -19,8 +19,8 @@ async function getAllMembers() {
     if (err.apiError) {
       errStatus.innerText = err.apiError.message
     } else {
-      errStatus.innerText = err.message + " (Is the API online?)"
-      console.error(err.message + " (Is the API online?)")
+      errStatus.innerText = err.message + FETCH_NO_API_ERROR
+      console.error(err.message + FETCH_NO_API_ERROR)
     }
   }
 }

@@ -1,5 +1,5 @@
 
-import { API_URL } from "../../settings.js"
+import { API_URL, FETCH_NO_API_ERROR } from "../../settings.js"
 import { handleHttpErrors } from "../../utils.js"
 import { sanitizeStringWithTableRows } from "../../utils.js"
 const URL = API_URL + "/cars"
@@ -34,8 +34,8 @@ export async function initReservation() {
     if (err.apiError) {
       setStatusMsg(err.apiError.message, true, "error")
     } else {
-      setStatusMsg(err.message + " (Is the API online)", true, "error")
-      console.error(err.message + " (Is the API online)")
+      setStatusMsg(err.message + FETCH_NO_API_ERROR, true, "error")
+      console.error(err.message + FETCH_NO_API_ERROR)
     }
   }
 }

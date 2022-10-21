@@ -1,4 +1,4 @@
-import { API_URL } from "../../settings.js"
+import { API_URL, FETCH_NO_API_ERROR } from "../../settings.js"
 import { handleHttpErrors } from "../../utils.js"
 
 const URL = API_URL + "/members"
@@ -80,7 +80,7 @@ async function saveMember(evt) {
     document.getElementById("goto-login").style.display = "block"
 
   } catch (err) {
-    setStatusMsg(err.message + " (Is the API online?)", true)
+    setStatusMsg(err.message + FETCH_NO_API_ERROR, true)
     if (err.apiError) {
       setStatusMsg(err.apiError.message, true)
     }

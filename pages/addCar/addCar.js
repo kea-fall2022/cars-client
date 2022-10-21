@@ -1,5 +1,5 @@
 import { handleHttpErrors } from "../../utils.js"
-import { API_URL } from "../../settings.js"
+import { API_URL,FETCH_NO_API_ERROR } from "../../settings.js"
 
 //Add id to this URL to get a single user
 const URL = `${API_URL}/cars`
@@ -51,8 +51,8 @@ async function submitCar(evt) {
     if (err.apiError) {
       setStatusMsg(err.apiError.message, true)
     } else {
-      setStatusMsg(err.message + " (Is the API online?)", true)
-      console.error(err.message + " (Is the API online?")
+      setStatusMsg(err.message + FETCH_NO_API_ERROR, true)
+      console.error(err.message + FETCH_NO_API_ERROR)
     }
   }
 }

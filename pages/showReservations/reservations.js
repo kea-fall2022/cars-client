@@ -1,4 +1,4 @@
-import { API_URL } from "../../settings.js"
+import { API_URL,FETCH_NO_API_ERROR } from "../../settings.js"
 import { handleHttpErrors, sanitizeStringWithTableRows } from "../../utils.js"
 
 export async function initListReservationsAll() {
@@ -22,8 +22,8 @@ export async function initListReservationsAll() {
     if (err.apiError) {
       document.getElementById("error").innerText = err.apiError.message
     } else {
-      document.getElementById("error").innerText = err.message + " (Is the API online)"
-      console.error(err.message + " (Is the API online)")
+      document.getElementById("error").innerText = err.message + FETCH_NO_API_ERROR
+      console.error(err.message + FETCH_NO_API_ERROR)
     }
   }
 }
