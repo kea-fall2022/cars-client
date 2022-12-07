@@ -1,12 +1,12 @@
-import { API_URL,FETCH_NO_API_ERROR } from "../../settings.js"
-import { handleHttpErrors, sanitizeStringWithTableRows } from "../../utils.js"
+import { API_URL, FETCH_NO_API_ERROR } from "../../settings.js"
+import { handleHttpErrors, sanitizeStringWithTableRows, makeOptions } from "../../utils.js"
 
 export async function initListReservationsAll() {
   document.getElementById("error").innerText = ""
   try {
     const HARDCODED_USER = "member1"
-    const URL = API_URL + "/reservations/" + HARDCODED_USER
-    const reservations = await fetch(URL).then(handleHttpErrors)
+    const URL = API_URL + "/reservations/users-reservations"
+    const reservations = await fetch(URL, makeOptions("GET", null, true)).then(handleHttpErrors)
     const rows = reservations.map(res => `
     <tr>
       <td>${res.carId}</td>

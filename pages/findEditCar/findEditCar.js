@@ -1,4 +1,4 @@
-import { handleHttpErrors } from "../../utils.js"
+import { handleHttpErrors, makeOptions } from "../../utils.js"
 import { API_URL, FETCH_NO_API_ERROR } from "../../settings.js"
 
 //Add id to this URL to get a single user
@@ -10,18 +10,21 @@ let carInputBrand
 let carInputModel
 let carInputPricePrDay
 let carInputDiscount
-
+let initialized = false
 export async function initFindEditCar(match) {
-  document.getElementById("btn-fetch-car").onclick = getCarIdFromInputField
-  document.getElementById("btn-submit-edited-car").onclick = submitEditedCar
-  document.getElementById("btn-delete-car").onclick = deleteCar;
-  carIdInput = document.getElementById("car-id")
-  carInputBrand = document.getElementById("brand")
-  carInputModel = document.getElementById("model")
-  carInputPricePrDay = document.getElementById("price-pr-day")
-  carInputDiscount = document.getElementById("best-discount")
-
+  if (!initialized) {
+    document.getElementById("btn-fetch-car").onclick = getCarIdFromInputField
+    document.getElementById("btn-submit-edited-car").onclick = submitEditedCar
+    document.getElementById("btn-delete-car").onclick = deleteCar;
+    carIdInput = document.getElementById("car-id")
+    carInputBrand = document.getElementById("brand")
+    carInputModel = document.getElementById("model")
+    carInputPricePrDay = document.getElementById("price-pr-day")
+    carInputDiscount = document.getElementById("best-discount")
+    initialized = true
+  }
   setInfoText("");
+  setStatusMsg("")
   //Check if id is provided as a Query parameter
   if (match?.params?.id) {
     const id = match.params.id
@@ -45,9 +48,10 @@ async function deleteCar() {
       setStatusMsg("No car found to delete", true)
       return
     }
-    const options = {}
-    options.method = "DELETE"
-    await fetch(URL + "/" + idForCarToDelete, options)
+    // const options = {}
+    // options.method = "DELETE"
+    const options = makeOptions("DELETE", null, true)
+    await fetch(URL + "/" + idForCarToDelete, options).then(handleHttpErrors)
     setStatusMsg("Car succesfully deleted", false)
     clearInputFields()
   }
@@ -75,7 +79,8 @@ async function fetchCar(id) {
   setStatusMsg("", false)
   try {
     const URL_FOR_ADMIN = URL + "/admin"
-    const car = await fetch(URL_FOR_ADMIN + "/" + id).then(handleHttpErrors)
+    const options = makeOptions("GET", null, true)
+    const car = await fetch(URL_FOR_ADMIN + "/" + id, options).then(handleHttpErrors)
     renderCar(car)
     setInfoText("Edit values and press 'Submit changes' or delete if needed")
   } catch (err) {
@@ -128,10 +133,12 @@ async function submitEditedCar(evt) {
       return
     }
 
-    const options = {}
-    options.method = "PUT"
-    options.headers = { "Content-type": "application/json" }
-    options.body = JSON.stringify(car)
+    // const options = {}
+    // options.method = "PUT"
+    // options.headers = { "Content-type": "application/json" }
+    // options.body = JSON.stringify(car)
+
+    const options = makeOptions("PUT", car, true)
 
 
     const PUT_URL = URL + "/" + car.id

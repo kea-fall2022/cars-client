@@ -1,11 +1,14 @@
 import { API_URL, FETCH_NO_API_ERROR } from "../../settings.js"
-import { handleHttpErrors } from "../../utils.js"
+import { handleHttpErrors, makeOptions } from "../../utils.js"
 import { sanitizeStringWithTableRows } from "../../utils.js"
 const URL = API_URL + "/cars/admin"
 
 export async function initCars() {
   try {
-    const cars = await fetch(URL).then(handleHttpErrors)
+    document.getElementById("table-rows").innerHTML = null
+    document.getElementById("error").innerText = ""
+    const options = makeOptions("GET", null, true)
+    const cars = await fetch(URL, options).then(handleHttpErrors)
     document.getElementById("table-rows").onclick = gotoToAddEditView
     const carRows = cars.map(car => `
   <tr>

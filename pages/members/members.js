@@ -1,18 +1,26 @@
-import { API_URL,FETCH_NO_API_ERROR } from "../../settings.js"
-import { sanitizeStringWithTableRows, handleHttpErrors } from "../../utils.js"
+import { API_URL, FETCH_NO_API_ERROR } from "../../settings.js"
+import { sanitizeStringWithTableRows, handleHttpErrors, makeOptions } from "../../utils.js"
 
 const URL = API_URL + "/members"
 
-const errStatus = document.getElementById("error")
+let errStatus
+let initialized
 
 export function initMembers() {
-  document.getElementById("tbl-body").onclick = showDetails
+  if (!initialized) {
+    document.getElementById("tbl-body").onclick = showDetails
+    errStatus = document.getElementById("error")
+    initialized = true
+  }
+  document.getElementById("tbl-body").innerHTML = ""
+  errStatus.innerText = ""
   getAllMembers()
 }
 
 async function getAllMembers() {
   try {
-    const usersFromServer = await fetch(URL).then(handleHttpErrors)
+    const options = makeOptions("GET", null, true)
+    const usersFromServer = await fetch(URL, options).then(handleHttpErrors)
     showAllData(usersFromServer)
   }
   catch (err) {

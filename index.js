@@ -6,14 +6,19 @@ import {
   setActiveLink, adjustForMissingHash, renderTemplate, loadHtml
 } from "./utils.js"
 
+
+
 import { initReservation } from "./pages/reservation/reserve.js"
 import { initMembers } from "./pages/members/members.js"
 import { initCars } from "./pages/cars/cars.js"
 import { initAddCar } from "./pages/addCar/addCar.js"
-import { initLogin } from "./pages/login/login.js"
+import { initLogin, toogleLoginStatus, logout } from "./pages/login/login.js"
 import { initSignup } from "./pages/signup/signup.js"
 import { initFindEditCar } from "./pages/findEditCar/findEditCar.js"
 import { initListReservationsAll } from "./pages/showReservations/reservations.js"
+
+const token = localStorage.getItem("token")
+toogleLoginStatus(token) //If token existed, for example after a refresh, set UI accordingly
 
 window.addEventListener("load", async () => {
 
@@ -48,6 +53,8 @@ window.addEventListener("load", async () => {
         <p style='margin-top:1em;font-size: 1.5em;color:darkgray;'>
           Car's 'R' Us - Created, as a help to make GREAT fullstack developers <span style='font-size:2em;'>&#128516;</span>
         </p>
+        <p>Use (username,password) &#8594; "user3", "test12" to logon as an <b>ADMIN</b> &#8594; can use menu's with (A)
+        <p>Use (username,password) &#8594; "member1", "test12" to logon as a member (<b>USER</b>) &#8594; can use menu's with (M)
      `,
       "/cars": () => {
         renderTemplate(templateCars, "content")
@@ -80,6 +87,9 @@ window.addEventListener("load", async () => {
       "/login": (match) => {
         renderTemplate(templateLogin, "content")
         initLogin()
+      },
+      "/logout": () => {
+        logout()
       }
     })
     .notFound(() => {
